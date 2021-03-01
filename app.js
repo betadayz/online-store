@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require('mongoose')
 require("dotenv").config();
-
+// import routes
+const userRoutes = require('./routes/user');
 
 // db
 mongoose.connect(process.env.DATABASE, {
@@ -12,10 +13,8 @@ mongoose.connect(process.env.DATABASE, {
 // app
 const app = express();
 
-// routes
-app.get("/", (req, res) => {
-    res.send("hello from node updated");
-});
+// routes middleware
+app.use(userRoutes)
 
 const port = process.env.PORT || 8000;
 
