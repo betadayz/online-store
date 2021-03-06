@@ -2,10 +2,11 @@ const formidable = require("formidable");
 const _ = require("lodash");
 const fs = require('fs');
 const Product = require("../models/product");
+const { errorHandler } = require("../helpers/dbErrorHandler")
 
 
 exports.create = (req, res) => {
-    let form = new formidable.incomingForm()
+    let form = new formidable.IncomingForm();
     form.keepExtensions = true
     form.parse(req, (err, fields, files) => {
         if(err) {
@@ -15,6 +16,7 @@ exports.create = (req, res) => {
         };
         let product = new Product(fields)
         if(files.photo) {
+            console.log('FILES PHOTO: ', files.photo)
             product.photo.data = fs.readFileSync(files.photo.path);
             product.photo.contentType = files.photo.type;
         }
