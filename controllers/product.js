@@ -5,14 +5,13 @@ const Product = require("../models/product");
 const { errorHandler } = require("../helpers/dbErrorHandler")
 
 exports.productById = (req, res, next, id) => {
-    Product.findId(id).exec((err, product) => {
+    Product.findById(id).exec((err, product) => {
         if(err || !product) {
             return res.status(400).json({
                 error: 'Product could not be found'
             });
         }
         req.product = product
-        console.log(req.product)
         next()
     })
 }
@@ -82,6 +81,7 @@ exports.remove = (req, res) => {
     })
 }
 
+
 exports.update = (req, res) => {
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
@@ -93,7 +93,8 @@ exports.update = (req, res) => {
         };
         const {name, description, price, category, quantity, shipping} = fields
 
-        if(!name || 
+        if(
+           !name || 
            !description || 
            !price || 
            !category || 

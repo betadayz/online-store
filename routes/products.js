@@ -5,23 +5,13 @@ const { create, productById, read, remove, update } = require('../controllers/pr
 const { requireSignin, isAuth, isAdmin } = require("../controllers/auth")
 const { userById } = require("../controllers/user");
 
-router.get('/product/:productId', read)
-router.post("/product/create/:userId", requireSignin, isAuth, isAdmin, create);
-router.delete(
-    '/product/:productId/:userId', 
-    requireSignin, 
-    isAuth, 
-    isAdmin,
-    remove
-);
+router.get('/product/:productId', read);
 
-router.put(
-    '/product/:productId/:userId', 
-    requireSignin, 
-    isAuth, 
-    isAdmin,
-    update
-);
+router.post("/product/create/:userId", requireSignin, isAuth, isAdmin, create);
+
+router.delete('/product/:productId/:userId', requireSignin, isAuth, isAdmin, remove);
+
+router.put('/product/:productId/:userId', requireSignin, isAuth, isAdmin, update);
 
 
 router.param('userId', userById);
