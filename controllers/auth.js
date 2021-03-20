@@ -29,14 +29,12 @@ exports.signin = (req, res) => {
                 error: "User with that email does not exist. Please signup"
             });
         }; 
-        // if user is found make sure the email and password match
-        // create authenticate method in user model
+        
         if (!user.authenticate(password)) {
             return res.status(401).json({
                 error: 'Email and password dont match'
             });
         }
-        // generate a signed token with user id and secret
         const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET)
         res.cookie('t', token, {expire: new Date() + 9999})
         const {_id, name, email, role} = user
